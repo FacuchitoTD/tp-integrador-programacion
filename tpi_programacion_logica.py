@@ -1,0 +1,83 @@
+import csv
+
+def cargar_paises(ruta_archivo):
+    """
+    Lee el archivo CSV y devuelve una lista de diccionarios con los datos.
+    Cumple con el requerimiento de controlar errores de formato.
+    """
+    lista_paises = []
+    
+    try:
+        with open(ruta_archivo, mode='r', encoding='utf-8') as archivo:
+            # csv.DictReader lee cada fila directamente como un diccionario
+            lector = csv.DictReader(archivo)
+            
+            for fila in lector:
+                try:
+                    pais = {
+                        'nombre': fila['nombre'].strip(),
+                        'poblacion': int(fila['poblacion'].strip()),
+                        'superficie': int(fila['superficie'].strip()),
+                        'continente': fila['continente'].strip()
+                    }
+                    lista_paises.append(pais)
+                except (ValueError, KeyError):
+                    print(f"Advertencia: Fila con formato inválido omitida: {fila}")
+
+    except FileNotFoundError:
+        print(f"Error: No se encontró el archivo en la ruta '{ruta_archivo}'.")
+    
+    return lista_paises
+
+def agregar_pais(lista_paises, nombre, poblacion, superficie, continente):
+    """
+    Agrega un nuevo país a la lista en memoria (RAM) y lo persiste
+    inmediatamente al final del archivo CSV usando el modo de apertura 'a'.
+    """
+
+    try:
+        # 1. Creamos el diccionario para mantener la lista en memoria actualizada
+        nuevo_pais = {
+            'nombre': nombre.strip(),
+            'poblacion': poblacion,
+            'superficie': superficie,
+            'continente': continente.strip()
+        }
+        lista_paises.append(nuevo_pais)
+        
+        # 2. Abrimos el archivo en modo append ('a') para escribir al final
+        # Usamos newline='' para evitar que en algunos sistemas deje renglones vacíos de más
+        with open('paises.csv', mode='a', encoding='utf-8', newline='') as archivo:
+            # Formateamos la cadena con los datos separados por coma
+            linea_csv = f"{nuevo_pais['nombre']},{nuevo_pais['poblacion']},{nuevo_pais['superficie']},{nuevo_pais['continente']}\n"
+            archivo.write(linea_csv)
+            
+        print(f"País '{nombre}' agregado y guardado en 'paises.csv' exitosamente.")
+    except FileNotFoundError:
+        print("Error: No se encontró el archivo 'paises.csv' al intentar guardar.")
+
+def actualizar_pais(lista_paises, nombre, nueva_poblacion, nueva_superficie):
+    """
+    Actualiza población y superficie de un país en memoria y reescribe el CSV completo.
+    Retorna True si encontró el país, False si no existe.
+    """
+    encontrado = False
+    for pais in lista_paises:
+        if pais['nombre'] == nombre:
+            pais['poblacion'] = nueva_poblacion
+            pais['superficie'] = nueva_superficie
+            encontrado = True
+            break
+
+    if not encontrado:
+        return False
+
+    try:
+        with open('paises.csv', mode='w', encoding='utf-8', newline='') as archivo:
+            writer = csv.DictWriter(archivo, fieldnames=['nombre', 'poblacion', 'superficie', 'continente'])
+            writer.writeheader()
+            writer.writerows(lista_paises)
+    except FileNotFoundError:
+        print("Error: No se encontró el archivo 'paises.csv' al intentar guardar.")
+
+    return True
