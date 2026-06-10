@@ -81,3 +81,14 @@ def actualizar_pais(lista_paises, nombre, nueva_poblacion, nueva_superficie):
         print("Error: No se encontró el archivo 'paises.csv' al intentar guardar.")
 
     return True
+
+def buscar_pais(lista_paises, nombre):
+    """
+    Busca países cuyo nombre contenga el texto ingresado.
+    Retorna una lista con los países que coinciden.
+    """
+    resultados = []
+    for pais in lista_paises:
+        if nombre in pais['nombre']:
+            resultados.append(pais)
+    return resultados

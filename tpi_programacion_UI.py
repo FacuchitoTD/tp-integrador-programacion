@@ -77,6 +77,23 @@ def actualizar_pais(lista_paises):
     else:
         print(f"Error: No se encontró ningún país con el nombre '{nombre}'.")
 
+def buscar_pais(lista_paises):
+    """Solicita el nombre a buscar y muestra los resultados encontrados."""
+    print("\n--- Buscar un país por nombre ---")
+    nombre = input("Ingrese el nombre del país a buscar: ").strip().title()
+    if not nombre:
+        print("Error: El nombre no puede estar vacío.")
+        return
+
+    resultados = logica.buscar_pais(lista_paises, nombre)
+
+    if not resultados:
+        print(f"No se encontró ningún país con el nombre '{nombre}'.")
+        return
+
+    print(f"\n{len(resultados)} resultado(s) encontrado(s):")
+    mostrar_tabla_paises(resultados)
+    
 def menu_principal():
     # Cargamos el dataset al arrancar el programa
     lista_paises = logica.cargar_paises('paises.csv')
@@ -116,7 +133,7 @@ def menu_principal():
                 actualizar_pais(lista_paises)
                 
             case '4':
-                print("\n[Próximamente] Lógica para buscar por nombre...")
+                buscar_pais(lista_paises)
                 
             case '5':
                 print("\n[Próximamente] Lógica para filtrar...")
