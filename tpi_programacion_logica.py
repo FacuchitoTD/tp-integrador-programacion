@@ -93,6 +93,7 @@ def buscar_pais(lista_paises, nombre):
             resultados.append(pais)
     return resultados
 
+#------Todas estas 3 funciones pertenecen a la opción número 5------#
 def filtrar_por_continente(lista_paises, continente):
     """
     Filtra la lista de países por continente.
@@ -123,3 +124,17 @@ def filtrar_por_superficie(lista_paises, minimo, maximo):
         if minimo <= pais['superficie'] <= maximo:
             resultados.append(pais)
     return resultados
+#------Fin de la opción número 5------#
+
+def ordenar_paises(lista_paises, criterio, ascendente=True):
+    """
+    Ordena la lista de países según el criterio indicado.
+    Retorna una nueva lista ordenada sin modificar la original.
+    criterio: 'nombre', 'poblacion' o 'superficie'
+    ascendente: True para ascendente, False para descendente
+    """
+    def obtener_valor(pais):
+        return pais[criterio]
+
+    lista_ordenada = sorted(lista_paises, key=obtener_valor, reverse=not ascendente)
+    return lista_ordenada

@@ -192,6 +192,61 @@ def filtrar_paises(lista_paises):
             return
         case _:
             print("Error: Opción no válida. Elija entre 0 y 3.")
+
+def ordenar_paises(lista_paises):
+    """Muestra el submenú de ordenamiento y presenta los resultados."""
+    print("""
+    --- Ordenar países ---
+    1. Por nombre
+    2. Por población
+    3. Por superficie
+    0. Volver al menú principal
+    """)
+
+    opcion = input("Seleccione criterio: ").strip()
+    try:
+        opcion = int(opcion)
+    except ValueError:
+        print("Error: Ingrese un número válido.")
+        return
+
+    match opcion:
+        case 1:
+            criterio = 'nombre'
+        case 2:
+            criterio = 'poblacion'
+        case 3:
+            criterio = 'superficie'
+        case 0:
+            return
+        case _:
+            print("Error: Opción no válida. Elija entre 0 y 3.")
+            return
+
+    print("""
+    1. Ascendente
+    2. Descendente
+    """)
+
+    orden = input("Seleccione orden: ").strip()
+    try:
+        orden = int(orden)
+    except ValueError:
+        print("Error: Ingrese un número válido.")
+        return
+
+    match orden:
+        case 1:
+            ascendente = True
+        case 2:
+            ascendente = False
+        case _:
+            print("Error: Opción no válida.")
+            return
+
+    resultado = logica.ordenar_paises(lista_paises, criterio, ascendente)
+    mostrar_tabla_paises(resultado)
+            
 def menu_principal():
     # Cargamos el dataset al arrancar el programa
     lista_paises = logica.cargar_paises('paises.csv')
@@ -227,6 +282,7 @@ def menu_principal():
                     
             case '2':
                 agregar_pais(lista_paises)
+                
             case '3':
                 actualizar_pais(lista_paises)
                 
@@ -237,7 +293,8 @@ def menu_principal():
                 filtrar_paises(lista_paises)
                 
             case '6':
-                print("\n[Próximamente] Lógica para ordenar países...")
+                ordenar_paises(lista_paises)
+
             case '7':
                 print("\n[Próximamente] Lógica para mostrar estadísticas...")
                 
