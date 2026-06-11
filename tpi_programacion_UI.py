@@ -266,7 +266,7 @@ def mostrar_estadisticas(lista_paises):
         print(f"  {continente}: {cantidad}")
 
 def menu_principal():
-    # Cargamos el dataset al arrancar el programa
+    """Punto de entrada del programa. Carga los datos y gestiona el menú principal."""
     lista_paises = logica.cargar_paises('paises.csv')
     
     while True:

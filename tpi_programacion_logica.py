@@ -15,10 +15,10 @@ def cargar_paises(ruta_archivo):
             for fila in lector:
                 try:
                     pais = {
-                        'nombre': fila['nombre'].strip(),
+                        'nombre': fila['nombre'].strip().title(),
                         'poblacion': int(fila['poblacion'].strip()),
                         'superficie': int(fila['superficie'].strip()),
-                        'continente': fila['continente'].strip()
+                        'continente': fila['continente'].strip().title()
                     }
                     lista_paises.append(pais)
                 except (ValueError, KeyError):
