@@ -92,3 +92,34 @@ def buscar_pais(lista_paises, nombre):
         if nombre in pais['nombre']:
             resultados.append(pais)
     return resultados
+
+def filtrar_por_continente(lista_paises, continente):
+    """
+    Filtra la lista de países por continente.
+    Retorna una lista con los países que coinciden.
+    """
+    resultados = []
+    for pais in lista_paises:
+        if pais['continente'] == continente:
+            resultados.append(pais)
+    return resultados
+def filtrar_por_poblacion(lista_paises, minimo, maximo):
+    """
+    Filtra la lista de países por rango de población.
+    Retorna una lista con los países cuya población está entre minimo y maximo.
+    """
+    resultados = []
+    for pais in lista_paises:
+        if minimo <= pais['poblacion'] <= maximo:
+            resultados.append(pais)
+    return resultados
+def filtrar_por_superficie(lista_paises, minimo, maximo):
+    """
+    Filtra la lista de países por rango de superficie.
+    Retorna una lista con los países cuya superficie está entre minimo y maximo.
+    """
+    resultados = []
+    for pais in lista_paises:
+        if minimo <= pais['superficie'] <= maximo:
+            resultados.append(pais)
+    return resultados

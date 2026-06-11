@@ -94,6 +94,104 @@ def buscar_pais(lista_paises):
     print(f"\n{len(resultados)} resultado(s) encontrado(s):")
     mostrar_tabla_paises(resultados)
     
+def filtrar_por_continente(lista_paises):
+    """Solicita un continente y muestra los países que pertenecen a él."""
+    continente = input("Ingrese el continente a filtrar: ").strip().title()
+    if not continente:
+        print("Error: El continente no puede estar vacío.")
+        return
+
+    resultados = logica.filtrar_por_continente(lista_paises, continente)
+
+    if not resultados:
+        print(f"No se encontraron países en el continente '{continente}'.")
+        return
+
+    print(f"\n{len(resultados)} país(es) encontrado(s) en {continente}:")
+    mostrar_tabla_paises(resultados)
+def filtrar_por_poblacion(lista_paises):
+    """Solicita un rango de población y muestra los países que coinciden."""
+    minimo = input("Ingrese la población mínima: ").strip()
+    try:
+        minimo = int(minimo)
+    except ValueError:
+        print("Error: La población mínima debe ser un número entero.")
+        return
+    if minimo < 0:
+        print("Error: La población mínima no puede ser negativa.")
+        return
+
+    maximo = input("Ingrese la población máxima: ").strip()
+    try:
+        maximo = int(maximo)
+    except ValueError:
+        print("Error: La población máxima debe ser un número entero.")
+        return
+    if maximo < minimo:
+        print("Error: La población máxima no puede ser menor que la mínima.")
+        return
+
+    resultados = logica.filtrar_por_poblacion(lista_paises, minimo, maximo)
+
+    if not resultados:
+        print(f"No se encontraron países con población entre {minimo} y {maximo}.")
+        return
+
+    print(f"\n{len(resultados)} país(es) encontrado(s):")
+    mostrar_tabla_paises(resultados)
+def filtrar_por_superficie(lista_paises):
+    """Solicita un rango de superficie y muestra los países que coinciden."""
+    minimo = input("Ingrese la superficie mínima (km2): ").strip()
+    try:
+        minimo = int(minimo)
+    except ValueError:
+        print("Error: La superficie mínima debe ser un número entero.")
+        return
+    if minimo < 0:
+        print("Error: La superficie mínima no puede ser negativa.")
+        return
+
+    maximo = input("Ingrese la superficie máxima (km2): ").strip()
+    try:
+        maximo = int(maximo)
+    except ValueError:
+        print("Error: La superficie máxima debe ser un número entero.")
+        return
+    if maximo < minimo:
+        print("Error: La superficie máxima no puede ser menor que la mínima.")
+        return
+
+    resultados = logica.filtrar_por_superficie(lista_paises, minimo, maximo)
+
+    if not resultados:
+        print(f"No se encontraron países con superficie entre {minimo} y {maximo} km2.")
+        return
+
+    print(f"\n{len(resultados)} país(es) encontrado(s):")
+    mostrar_tabla_paises(resultados)
+def filtrar_paises(lista_paises):
+    """Muestra el submenú de filtros y deriva a la función correspondiente."""
+    print("""
+    --- Filtrar países ---
+    1. Por continente
+    2. Por rango de población
+    3. Por rango de superficie
+    0. Volver al menú principal
+    """)
+
+    opcion = input("Seleccione una opción: ").strip()
+
+    match opcion:
+        case '1':
+            filtrar_por_continente(lista_paises)
+        case '2':
+            filtrar_por_poblacion(lista_paises)
+        case '3':
+            filtrar_por_superficie(lista_paises)
+        case '0':
+            return
+        case _:
+            print("Error: Opción no válida. Elija entre 0 y 3.")
 def menu_principal():
     # Cargamos el dataset al arrancar el programa
     lista_paises = logica.cargar_paises('paises.csv')
@@ -136,11 +234,10 @@ def menu_principal():
                 buscar_pais(lista_paises)
                 
             case '5':
-                print("\n[Próximamente] Lógica para filtrar...")
+                filtrar_paises(lista_paises)
                 
             case '6':
-                print("\n[Próximamente] Lógica para ordenar...")
-                
+                print("\n[Próximamente] Lógica para ordenar países...")
             case '7':
                 print("\n[Próximamente] Lógica para mostrar estadísticas...")
                 
