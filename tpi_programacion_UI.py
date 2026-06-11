@@ -247,6 +247,24 @@ def ordenar_paises(lista_paises):
     resultado = logica.ordenar_paises(lista_paises, criterio, ascendente)
     mostrar_tabla_paises(resultado)
             
+def mostrar_estadisticas(lista_paises):
+    """Obtiene y muestra las estadísticas del dataset."""
+    if not lista_paises:
+        print("Error: No hay países cargados en el sistema.")
+        return
+
+    estadistica  = logica.obtener_estadisticas(lista_paises)
+
+    print("\n--- Estadísticas ---")
+    print(f"País con mayor población: {estadistica['pais_mayor_poblacion']['nombre']} ({estadistica['pais_mayor_poblacion']['poblacion']})")
+    print(f"País con menor población: {estadistica['pais_menor_poblacion']['nombre']} ({estadistica['pais_menor_poblacion']['poblacion']})")
+    print(f"Promedio de población: {estadistica['promedio_poblacion']}")
+    print(f"Promedio de superficie: {estadistica['promedio_superficie']} km2")
+
+    print("\nCantidad de países por continente:")
+    for continente, cantidad in estadistica['paises_por_continente'].items():
+        print(f"  {continente}: {cantidad}")
+
 def menu_principal():
     # Cargamos el dataset al arrancar el programa
     lista_paises = logica.cargar_paises('paises.csv')
@@ -282,7 +300,7 @@ def menu_principal():
                     
             case '2':
                 agregar_pais(lista_paises)
-                
+
             case '3':
                 actualizar_pais(lista_paises)
                 
@@ -296,7 +314,7 @@ def menu_principal():
                 ordenar_paises(lista_paises)
 
             case '7':
-                print("\n[Próximamente] Lógica para mostrar estadísticas...")
+                mostrar_estadisticas(lista_paises)
                 
             case '0':
                 print("\nSaliendo del programa...")

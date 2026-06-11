@@ -138,3 +138,42 @@ def ordenar_paises(lista_paises, criterio, ascendente=True):
 
     lista_ordenada = sorted(lista_paises, key=obtener_valor, reverse=not ascendente)
     return lista_ordenada
+
+def obtener_estadisticas(lista_paises):
+    """
+    Calcula y retorna un diccionario con las estadísticas del dataset.
+    """
+    # País con mayor y menor población
+    pais_mayor_poblacion = lista_paises[0]
+    pais_menor_poblacion = lista_paises[0]
+    total_poblacion = 0
+    total_superficie = 0
+    paises_por_continente = {}
+
+    for pais in lista_paises:
+        # Mayor y menor población
+        if pais['poblacion'] > pais_mayor_poblacion['poblacion']:
+            pais_mayor_poblacion = pais
+        if pais['poblacion'] < pais_menor_poblacion['poblacion']:
+            pais_menor_poblacion = pais
+
+        # Acumulamos para promedios
+        total_poblacion += pais['poblacion']
+        total_superficie += pais['superficie']
+
+        # Contamos por continente
+        continente = pais['continente']
+        if continente in paises_por_continente:
+            paises_por_continente[continente] += 1
+        else:
+            paises_por_continente[continente] = 1
+
+    cantidad = len(lista_paises)
+
+    return {
+        'pais_mayor_poblacion': pais_mayor_poblacion,
+        'pais_menor_poblacion': pais_menor_poblacion,
+        'promedio_poblacion': total_poblacion // cantidad,
+        'promedio_superficie': total_superficie // cantidad,
+        'paises_por_continente': paises_por_continente
+    }
