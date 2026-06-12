@@ -82,7 +82,7 @@ def actualizar_pais(lista_paises, nombre, nueva_poblacion, nueva_superficie):
     """
     encontrado = False
     for pais in lista_paises:
-        if pais['nombre'] == nombre:
+        if normalizar(pais['nombre']) == normalizar(nombre):
             pais['poblacion'] = nueva_poblacion
             pais['superficie'] = nueva_superficie
             encontrado = True
