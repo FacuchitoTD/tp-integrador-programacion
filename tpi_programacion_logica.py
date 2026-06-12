@@ -1,5 +1,24 @@
 import csv
 
+def normalizar(texto):
+    """Elimina tildes para comparación."""
+    reemplazos = {
+        'á': 'a',
+        'é': 'e',
+        'í': 'i',
+        'ó': 'o',
+        'ú': 'u',
+        'Á': 'a',
+        'É': 'e',
+        'Í': 'i',
+        'Ó': 'o',
+        'Ú': 'u'
+    }
+    texto = texto.lower()
+    for con_tilde, sin_tilde in reemplazos.items():
+        texto = texto.replace(con_tilde, sin_tilde)
+    return texto
+
 def cargar_paises(ruta_archivo):
     """
     Lee el archivo CSV y devuelve una lista de diccionarios con los datos.
@@ -89,7 +108,7 @@ def buscar_pais(lista_paises, nombre):
     """
     resultados = []
     for pais in lista_paises:
-        if nombre in pais['nombre']:
+        if normalizar(nombre) in normalizar(pais['nombre']):
             resultados.append(pais)
     return resultados
 
@@ -101,7 +120,7 @@ def filtrar_por_continente(lista_paises, continente):
     """
     resultados = []
     for pais in lista_paises:
-        if pais['continente'] == continente:
+        if normalizar(pais['continente']) == normalizar(continente):
             resultados.append(pais)
     return resultados
 def filtrar_por_poblacion(lista_paises, minimo, maximo):
