@@ -134,3 +134,7 @@ El sistema aplica una arquitectura de dos capas:
 ## Repositorio
 
 [https://github.com/FacuchitoTD/tp-integrador-programacion](https://github.com/FacuchitoTD/tp-integrador-programacion)
+
+## Video explicativo
+https://youtu.be/k2V-HYU2Ppo
+
